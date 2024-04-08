@@ -31,7 +31,7 @@ def search_movies(query, vectorizer, tfidf_matrix, movies):
     query_clean = clean_title(query)
     query_vec = vectorizer.transform([query_clean])
     similarity = cosine_similarity(query_vec, tfidf_matrix).flatten()
-    indices = np.argsort(similarity)[-5:]  # Die Top-5-Indizes
+    indices = np.argsort(similarity)[-20:]  # Die Top-20-Indizes
     return movies.iloc[indices][::-1]  # Filme mit den höchsten Ähnlichkeitswerten
 
 
