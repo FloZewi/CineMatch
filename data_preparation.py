@@ -3,11 +3,12 @@ import re
 
 
 # Funktion zum Laden von Daten aus einer CSV-Datei
-def load_data():
-    print("Lade Daten...")
-    data = pd.read_csv("movies.csv")
+def load_data(filepath):
+    """Lädt Daten aus einer CSV-Datei und gibt ein DataFrame zurück."""
+    print(f"Lade Daten aus {filepath}...")
+    data = pd.read_csv(filepath)
     print("Erste 5 Zeilen der geladenen Daten:")
-    print(data.head())  # Zeigt die ersten fünf Zeilen des DataFrame
+    print(data.head())
     return data
 
 
@@ -24,7 +25,7 @@ def clean_title(title):
 # Hauptfunktion zur Vorbereitung der Filmdaten:
 # Lädt die Daten, bereinigt die Titel und fügt diese als neue Spalte hinzu
 def prepare_movies_data():
-    movies_data = load_data()
+    movies_data = load_data("movies.csv")
     # Anwenden der clean_title-Funktion auf jede Zeile im Titel
     movies_data['clean_title'] = movies_data['title'].apply(clean_title)
     print("\nDaten nach der Bereinigung der Titel:")
