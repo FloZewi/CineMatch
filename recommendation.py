@@ -1,4 +1,5 @@
 from search import search_movies
+from data_utils import clean_title
 
 
 # Empfehlungsfunktion
@@ -13,4 +14,10 @@ def generate_recommendations(movie_id, movies, ratings, vectorizer=None, tfidf_m
     # Zusammenführen der Empfehlungen mit den durchschnittlichen Bewertungen
     recommended_movies_with_ratings = recommended_movies.merge(average_ratings, left_index=True, right_on='movieId')
 
-    return recommended_movies_with_ratings
+    # Bereinige Titel, um das Jahr zu entfernen
+    recommended_movies_with_ratings['clean_title'] = recommended_movies_with_ratings['title'].apply(clean_title)
+
+    # Wähle nur die Spalten 'clean_title' und 'average_rating' zur Ausgabe
+    final_recommendations = recommended_movies_with_ratings[['clean_title', 'average_rating']]
+
+    return final_recommendations
