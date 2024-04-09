@@ -14,5 +14,9 @@ def load_data(filepath):
 
 
 def clean_title(title):
-    """Bereinigt Filmtitel von Sonderzeichen."""
-    return re.sub(pattern='[^a-zA-Z0-9 ]', repl='', string=title)
+    """Bereinigt Filmtitel von Sonderzeichen und entfernt das Jahr."""
+    # Enfernt das Jahr am Ende des Titels
+    title_without_year = re.sub(r' \(\d{4}\)$', '', title)
+    # Bereinigt den Titel von Sonderzeichen
+    cleaned_title = re.sub(pattern='[^a-zA-Z0-9 ]', repl='', string=title_without_year)
+    return cleaned_title
