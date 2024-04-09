@@ -28,8 +28,7 @@ def main():
         print(f"\nEmpfehlungen für Film ID {movie_id_to_search}:")
         recommendations = generate_recommendations(movie_id_to_search, movies_data, ratings_data, vectorizer,
                                                    tfidf_matrix)
-        print(f"Empfehlungen für Film ID {movie_id_to_search}: {recommendations[['title', 'clean_title',
-                                                                                 'average_rating']]}")
+        print(f"Empfehlungen für Film ID {movie_id_to_search}: {recommendations[['clean_title', 'average_rating']]}")
 
 
 if __name__ == "__main__":
