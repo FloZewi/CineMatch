@@ -1,22 +1,7 @@
-import pandas as pd
+import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-import numpy as np
-import re
-
-
-# Funktion zum Bereinigen von Filmtiteln
-def clean_title(title):
-    # Entfernt alles außer Buchstaben und Zahlen und ersetzt es durch Leerzeichen
-    return re.sub(pattern='[^a-zA-Z0-9 ]', repl='', string=title)
-
-
-# Funktion zum Laden von Daten aus einer CSV-Datei
-def load_data():
-    data = pd.read_csv("movies.csv")
-    # Bereinigen der Titel und Hinzufügen einer neuen Spalte
-    data['clean_title'] = data['title'].apply(clean_title)
-    return data
+from data_utils import clean_title
 
 
 # Initialisiert die Suchfunktionalität
@@ -33,19 +18,3 @@ def search_movies(query, vectorizer, tfidf_matrix, movies):
     similarity = cosine_similarity(query_vec, tfidf_matrix).flatten()
     indices = np.argsort(similarity)[-20:]  # Die Top-20-Indizes
     return movies.iloc[indices][::-1]  # Filme mit den höchsten Ähnlichkeitswerten
-
-
-# Pfad zur CSV-Datei
-csv_file_path = 'movies.csv'
-movies_data = load_data()
-
-# Suchfunktionalität initialisieren
-vectorizer, tfidf_matrix = initialize_search(movies_data)
-
-# Durchführen einer Suche nach einem Beispiel-Filmtitel
-search_query = "Toy Story"
-search_results = search_movies(search_query, vectorizer, tfidf_matrix, movies_data)
-
-# Ergebnisse anzeigen
-print(f"Suchergebnisse für '{search_query}':")
-print(search_results[['title', 'clean_title']])
