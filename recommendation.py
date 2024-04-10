@@ -51,8 +51,9 @@ def refine_recommendations(movie_id, movies, tags_data):
     if tags_combined is not None:
         similarity, movie_ids = calculate_similarity(tags_combined)
         similar_movie_ids = get_similar_movies(movie_id, similarity, movie_ids)
-        refined_recommendations = movies[movies['movieId'].isin(similar_movie_ids)]
-        return refined_recommendations
+        refined_recommendations = movies[movies['movieId'].isin(similar_movie_ids)].copy()
+        refined_recommendations['clean_title'] = refined_recommendations['title'].apply(clean_title)
+        return refined_recommendations[['clean_title', 'movieId']]
     else:
         # Geeignete Fehlerbehandlung oder Rückgabe eines leeren DataFrames
         return pd.DataFrame()
