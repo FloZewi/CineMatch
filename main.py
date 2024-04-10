@@ -1,6 +1,6 @@
 from data_preparation import prepare_movies_data
 from search import initialize_search, search_movies
-from recommendation import generate_recommendations
+from recommendation import generate_recommendations, refine_recommendations
 from data_utils import load_data, load_tags_data
 
 
@@ -30,7 +30,13 @@ def main():
         print(f"\nEmpfehlungen für Film ID {movie_id_to_search}:")
         recommendations = generate_recommendations(movie_id_to_search, movies_data, ratings_data, tags_data,
                                                    vectorizer, tfidf_matrix)
-        print(f"Empfehlungen für Film ID {movie_id_to_search}: {recommendations[['clean_title', 'average_rating']]}")
+        print(f"Empfehlungen für Film ID {movie_id_to_search}: {recommendations[['clean_title', 'average_rating']]}\n")
+
+        # Verwenden von refine_recommendations, um tag-basierte Empfehlungen zu generieren
+        print(f"Tag-basierte Empfehlungen für Film ID {movie_id_to_search}:")
+        tag_based_recommendations = refine_recommendations(movie_id_to_search, movies_data, tags_data)
+        # Ausgabe entsprechend der Struktur der Daten anpassen
+        print(tag_based_recommendations[['title', 'movieId']].head())
 
 
 if __name__ == "__main__":
