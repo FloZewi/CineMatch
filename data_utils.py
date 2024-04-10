@@ -20,3 +20,14 @@ def clean_title(title):
     # Bereinigt den Titel von Sonderzeichen
     cleaned_title = re.sub(pattern='[^a-zA-Z0-9 ]', repl='', string=title_without_year)
     return cleaned_title
+
+
+# Neue Funktionen hinzugefügt
+def load_tags_data(filepath):
+    """Lädt die Tag-Daten aus einer CSV-Datei und gibt ein DataFrame zurück."""
+    return load_data(filepath)
+
+
+def load_links_data(filepath):
+    """Lädt die Link-Daten aus einer CSV-Datei und gibt ein DataFrame zurück."""
+    return load_data(filepath)
