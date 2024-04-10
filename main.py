@@ -33,10 +33,10 @@ def main():
         print(f"Empfehlungen für Film ID {movie_id_to_search}: {recommendations[['clean_title', 'average_rating']]}\n")
 
         # Verwenden von refine_recommendations, um tag-basierte Empfehlungen zu generieren
-        print(f"Tag-basierte Empfehlungen für Film ID {movie_id_to_search}:")
+        print(f"\nTag-basierte Empfehlungen für Film ID {movie_id_to_search}:")
         tag_based_recommendations = refine_recommendations(movie_id_to_search, movies_data, tags_data)
         # Ausgabe entsprechend der Struktur der Daten anpassen
-        print(tag_based_recommendations[['title', 'movieId']].head())
+        print(tag_based_recommendations[['clean_title', 'movieId']].head())
 
 
 if __name__ == "__main__":
