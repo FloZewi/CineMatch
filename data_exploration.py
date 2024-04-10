@@ -75,22 +75,38 @@ def load_datasets():
     """Lädt alle erforderlichen Datensätze und gibt sie zurück."""
     movies_df = load_csv_file("movies.csv")
     ratings_df = load_csv_file("ratings.csv")
-    return movies_df, ratings_df
+    tags_df = load_csv_file("tags.csv")
+    links_df = load_csv_file("links.csv")
+    return movies_df, ratings_df, tags_df, links_df
 
 
 def main():
     # Laden der Datensätze
-    movies_df, ratings_df = load_datasets()
+    movies_df, ratings_df, tags_df, links_df = load_datasets()
 
-    # Exploration der Daten
-    explore_data(movies_df, ratings_df)
+    # Exploration der Daten für movies und ratings
+    explore_data(movies_df, "movies_df")
+    explore_data(ratings_df, "ratings_df")
 
-    # Überprüfen der Spaltennamen in movies_df
+    # Exploration der Daten für tags und links
+    explore_data(tags_df, "tags_df")
+    explore_data(links_df, "links_df")
+
+    # Überprüfen der Spaltennamen und Ausgabe der ersten fünf Zeilen der DataFrames
     print("Spalten in movies_df:", movies_df.columns)
-
-    # Ausgabe der ersten fünf Zeilen des movies DataFrame
     print("Erste Zeilen von movies_df:")
     print(movies_df.head())
+    print("Spalten in ratings_df:", ratings_df.columns)
+    print("Erste Zeilen von ratings_df:")
+    print(ratings_df.head())
+
+    # Hinzugefügt: Überprüfen der Spaltennamen und Ausgabe der ersten fünf Zeilen für tags und links DataFrames
+    print("Spalten in tags_df:", tags_df.columns)
+    print("Erste Zeilen von tags_df:")
+    print(tags_df.head())
+    print("Spalten in links_df:", links_df.columns)
+    print("Erste Zeilen von links_df:")
+    print(links_df.head())
 
     # Basisstatistiken anzeigen
     basic_statistics(movies_df)
