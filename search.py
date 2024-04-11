@@ -18,3 +18,22 @@ def search_movies(query, vectorizer, tfidf_matrix, movies):
     similarity = cosine_similarity(query_vec, tfidf_matrix).flatten()
     indices = np.argsort(similarity)[-20:]  # Die Top-20-Indizes
     return movies.iloc[indices][::-1]  # Filme mit den höchsten Ähnlichkeitswerten
+
+
+# Neue Funktion find_movie_by_title hinzugefügt
+def find_movie_by_title(title, movies):
+    """
+    Sucht nach einem Film basierend auf einem Teil des Titels und gibt die movieId und den Titel des am besten
+    passenden Films zurück.
+    """
+    # Bereinige den eingegebenen Titel
+    cleaned_title = clean_title(title)
+    # Nutze die vorhandene Suchfunktionalität, um die Ähnlichkeit basierend auf dem bereinigten Titel zu finden
+    vectorizer, tfidf_matrix = initialize_search(movies)
+    similar_movies = search_movies(cleaned_title, vectorizer, tfidf_matrix, movies)
+    if not similar_movies.empty:
+        # Nimm den am besten passenden Film (ersten Eintrag nach der Sortierung)
+        top_match = similar_movies.iloc[0]
+        return top_match['movieId'], top_match['title']
+    else:
+        return None, None
