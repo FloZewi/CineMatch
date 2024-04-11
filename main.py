@@ -1,6 +1,6 @@
 from data_preparation import prepare_movies_data
 from search import initialize_search, search_movies
-from recommendation import generate_recommendations, refine_recommendations
+from recommendation import generate_recommendations, refine_recommendations, combine_recommendations
 from data_utils import load_data, load_tags_data
 
 
@@ -35,8 +35,23 @@ def main():
         # Verwenden von refine_recommendations, um tag-basierte Empfehlungen zu generieren
         print(f"\nTag-basierte Empfehlungen für Film ID {movie_id_to_search}:")
         tag_based_recommendations = refine_recommendations(movie_id_to_search, movies_data, tags_data)
+
         # Ausgabe entsprechend der Struktur der Daten anpassen
         print(tag_based_recommendations[['clean_title', 'movieId']].head())
+
+        # Generieren von Empfehlungen mit beiden Methoden
+        recs_general = generate_recommendations(movie_id_to_search, movies_data, ratings_data, tags_data, vectorizer,
+                                                tfidf_matrix)
+        recs_tags = refine_recommendations(movie_id_to_search, movies_data, tags_data)
+
+        # Ausgabe der general und tag-basierten Empfehlungen vor der Kombination
+        print(f"Allgemeine Empfehlungen: {recs_general[['clean_title', 'average_rating']].head()}\n")
+        print(f"Tag-basierte Empfehlungen: {recs_tags[['clean_title', 'movieId']].head()}\n")
+
+        # Kombinieren der Empfehlungen
+        combined_recs = combine_recommendations(recs_general, recs_tags)
+        print("Kombinierte Empfehlungen:")
+        print(combined_recs.head())
 
 
 if __name__ == "__main__":

@@ -84,3 +84,11 @@ def generate_recommendations(movie_id, movies, ratings, tags_data, vectorizer, t
     final_recommendations_with_tags = final_recommendations_with_tags[['clean_title', 'average_rating', 'tags']]
 
     return final_recommendations_with_tags
+
+
+def combine_recommendations(recs_general, recs_tags):
+    # Vereinigt die Empfehlungen
+    combined_recs = pd.concat([recs_general, recs_tags]).drop_duplicates(subset='movieId')
+    # Sortieren nach einem Kriterium, z.B. nach 'average_rating'
+    combined_recs = combined_recs.sort_values(by='average_rating', ascending=False)
+    return combined_recs
