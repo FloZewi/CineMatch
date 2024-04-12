@@ -22,7 +22,7 @@ Folge diesen Schritten, um CineMatch zu installieren und auszuführen:
 
 ***Klonen des Repositories:***
 
-        git clone <Repository-URL>
+        git clone https://github.com/FloZewi/CineMatch.git
 
 
 
