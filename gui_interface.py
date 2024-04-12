@@ -1,5 +1,6 @@
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import ttk, messagebox     # ttk für verbesserte Widgets
+import platform
 from data_preparation import prepare_movies_data
 from search import initialize_search, find_movie_by_title
 from recommendation import generate_recommendations, refine_recommendations, combine_recommendations
@@ -28,17 +29,23 @@ class MovieRecommenderGUI:
         self.create_widgets()
 
     def create_widgets(self):
+        # System-spezifische Anpassungen
+        if platform.system() == "Darwin":  # macOS
+            padding = 8
+        else:
+            padding = 2
+
         # Eingabefeld für Filmtitel
         self.title_entry = tk.Entry(self.root, width=50)
         self.title_entry.pack()
 
         # Suchen-Button
-        self.search_button = tk.Button(self.root, text="Film suchen", command=self.search_movie)
-        self.search_button.pack()
+        self.search_button = ttk.Button(self.root, text="Film suchen", command=self.search_movie)
+        self.search_button.pack(pady=padding)
 
         # Textfeld für die Ergebnisse
         self.result_text = tk.Text(self.root, height=10, width=50)
-        self.result_text.pack()
+        self.result_text.pack(pady=padding)
 
     def search_movie(self):
         # Benutzereingabe holen
