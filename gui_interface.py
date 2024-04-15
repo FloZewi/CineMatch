@@ -31,21 +31,25 @@ class MovieRecommenderGUI:
     def create_widgets(self):
         # System-spezifische Anpassungen
         if platform.system() == "Darwin":  # macOS
-            padding = 8
+            padding = (10, 5)
+            style = ttk.Style()
+            style.configure('TButton', padding=6, font=('Helvetica', 12))  # Button-Stil für macOS
+            style.configure('TEntry', padding=6, font=('Helvetica', 12))  # Entry-Stil für macOS
+            style.configure('TText', padding=6, font=('Helvetica', 12))  # Text-Stil für macOS
         else:
-            padding = 2
+            padding = (2, 2)
 
         # Eingabefeld für Filmtitel
         self.title_entry = tk.Entry(self.root, width=50)
-        self.title_entry.pack()
+        self.title_entry.pack(padx=padding[0], pady=padding[1])
 
         # Suchen-Button
         self.search_button = ttk.Button(self.root, text="Film suchen", command=self.search_movie)
-        self.search_button.pack(pady=padding)
+        self.search_button.pack(pady=padding[1])
 
         # Textfeld für die Ergebnisse
         self.result_text = tk.Text(self.root, height=10, width=50)
-        self.result_text.pack(pady=padding)
+        self.result_text.pack(padx=padding[0], pady=padding[1])
 
     def search_movie(self):
         # Benutzereingabe holen
