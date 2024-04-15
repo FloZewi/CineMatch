@@ -10,13 +10,10 @@ from data_utils import load_data, load_tags_data
 # Haupt-GUI-Klasse
 class MovieRecommenderGUI:
     def __init__(self, root):
-        self.result_text = None
-        self.search_button = None
-        self.title_entry = None
         self.root = root
         self.root.title("CineMatch: Dein persönlicher Filmempfehlungsgenerator")
 
-        # Initialisiere die Daten
+        # Initialisierung aller Instanz attribute
         self.movie_filepath = 'movies.csv'
         self.ratings_filepath = 'ratings.csv'
         self.tags_filepath = 'tags.csv'
@@ -25,31 +22,39 @@ class MovieRecommenderGUI:
         self.tags_data = load_tags_data(self.tags_filepath)
         self.vectorizer, self.tfidf_matrix = initialize_search(self.movies_data)
 
+        self.title_entry = tk.Entry(self.root, width=50)
+        self.search_button = ttk.Button(self.root, text="Film suchen", command=self.search_movie)
+        self.result_text = tk.Text(self.root, height=10, width=50)
+
+        self.padding = (2, 2)       # Standard-Padding für nicht macOS
+
+        # System-spezifische Optionen
+        self.set_system_specific_options()
+
         # Erstelle das Layout
         self.create_widgets()
 
-    def create_widgets(self):
-        # System-spezifische Anpassungen
-        if platform.system() == "Darwin":  # macOS
-            padding = (10, 5)
+    def set_system_specific_options(self):
+        # Anpassungen für macOS
+        if platform.system() == "Darwin":
+            self.root.tk.call('tk', 'scaling', 1.5)
             style = ttk.Style()
-            style.configure('TButton', padding=6, font=('Helvetica', 12))  # Button-Stil für macOS
-            style.configure('TEntry', padding=6, font=('Helvetica', 12))  # Entry-Stil für macOS
-            style.configure('TText', padding=6, font=('Helvetica', 12))  # Text-Stil für macOS
+            style.theme_use('aqua')
+            style.configure('TButton', font=('Helvetica', 12), padding=6)
+            style.configure('TEntry', font=('Helvetica', 12), padding=6)
+            style.configure('TText', font=('Helvetica', 12), padding=6)
+            self.padding = (10, 5)      # Anpassen des Paddings für macOS
         else:
-            padding = (2, 2)
+            self.padding = (2, 2)
 
+    def create_widgets(self):
+        # Widgets werden entsprechend der zuvor gesetzten Systemeinstellungen erstellt
         # Eingabefeld für Filmtitel
-        self.title_entry = tk.Entry(self.root, width=50)
-        self.title_entry.pack(padx=padding[0], pady=padding[1])
-
+        self.title_entry.pack(padx=self.padding[0], pady=self.padding[1])
         # Suchen-Button
-        self.search_button = ttk.Button(self.root, text="Film suchen", command=self.search_movie)
-        self.search_button.pack(pady=padding[1])
-
+        self.search_button.pack(pady=self.padding[1])
         # Textfeld für die Ergebnisse
-        self.result_text = tk.Text(self.root, height=10, width=50)
-        self.result_text.pack(padx=padding[0], pady=padding[1])
+        self.result_text.pack(padx=self.padding[0], pady=self.padding[1])
 
     def search_movie(self):
         # Benutzereingabe holen
@@ -74,6 +79,10 @@ class MovieRecommenderGUI:
 # Hauptfunktion zum Ausführen der App
 def run_app():
     root = tk.Tk()
+
+    if platform.system() == "Darwin":
+        root.tk.call('tk', 'scaling', 1.5)  # Verbessere Skalierung auf hochauflösenden Bildschirmen
+
     MovieRecommenderGUI(root)
     root.mainloop()
 
