@@ -50,7 +50,7 @@ Lade das MovieLens 25M Dataset herunter und entpacke es im Hauptverzeichnis.
 
 ***Verwendung der Anwendung:***
 
-Geben Sie den Titel des Films in das Eingabefeld ein und klicken Sie auf "Film suchen", um personalisierte Empfehlungen zu erhalten.
+Geben Sie den Titel des Films (z.B. Toy Story) in das Eingabefeld ein und klicken Sie auf "Film suchen", um personalisierte Empfehlungen zu erhalten.
 
 
 
